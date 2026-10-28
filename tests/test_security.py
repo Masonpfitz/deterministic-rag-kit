@@ -169,3 +169,130 @@ def test_token_file_is_private_random_and_replaced_on_each_start(cfg):
 
 def test_client_gives_up_quietly_without_a_token_file(cfg):
     assert rerank.score_via_server(cfg, "q", ["a"]) is None
+
+
+# ------------------------------------------------------------------ a squatter on the port must get no notes
+
+class Squatter:
+    """Something else listening on the reranker's port: records every request, doesn't know the token."""
+
+    def __init__(self, answer=None):
+        import http.server
+        outer = self
+        self.requests = []
+        self.answer = answer
+
+        class H(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):  # noqa: N802
+                body = self.rfile.read(int(self.headers.get("Content-Length", 0) or 0))
+                outer.requests.append((self.path, dict(self.headers), body))
+                data = json.dumps(outer.answer if outer.answer is not None else {"proof": "00" * 32, "scores": [9.0]}).encode()
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+
+            def log_message(self, *a):
+                pass
+        self.srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+        self.thread = threading.Thread(target=self.srv.serve_forever, daemon=True)
+        self.thread.start()
+
+    @property
+    def port(self):
+        return self.srv.server_port
+
+    def close(self):
+        self.srv.shutdown()
+        self.srv.server_close()
+
+    @property
+    def leaked(self):
+        return [r for r in self.requests if r[0] != "/hello" or b"alpha" in r[2] or any("token" in k.lower() for k in r[1])]
+
+
+def real_token(cfg):
+    rerank.write_token(cfg)  # a server was started once, so a token file exists
+
+
+def test_a_squatter_that_lacks_the_token_receives_no_notes_and_no_token(cfg):
+    real_token(cfg)
+    sq = Squatter()
+    cfg.raw["rerank"]["port"] = sq.port
+    try:
+        assert rerank.score_via_server(cfg, "secret question", ["alpha private note text"]) is None
+        assert [r[0] for r in sq.requests] == ["/hello"]  # only the nonce challenge went out
+        path, headers, body = sq.requests[0]
+        assert set(json.loads(body)) == {"nonce"} and not sq.leaked
+        assert not any(k.lower() == rerank.TOKEN_HEADER.lower() for k in headers)
+        assert "No notes were sent" in (cfg.state / "rerank.warning").read_text()
+    finally:
+        sq.close()
+
+
+def test_a_squatter_that_answers_with_a_replayed_or_garbled_proof_is_rejected(cfg):
+    real_token(cfg)
+    for answer in ({"proof": ""}, {"proof": "zz"}, {"nope": 1}, [1, 2], "scores"):
+        sq = Squatter(answer=answer)
+        cfg.raw["rerank"]["port"] = sq.port
+        try:
+            assert rerank.score_via_server(cfg, "q", ["alpha note"]) is None
+            assert [r[0] for r in sq.requests] == ["/hello"]
+        finally:
+            sq.close()
+
+
+def test_nothing_listening_falls_back_quietly(cfg):
+    real_token(cfg)
+    s = Squatter()
+    port = s.port
+    s.close()
+    cfg.raw["rerank"]["port"] = port
+    assert rerank.score_via_server(cfg, "q", ["a"]) is None
+    assert not (cfg.state / "rerank.warning").exists()  # a down server is normal, not a warning
+
+
+def test_the_real_server_proves_itself_and_gets_the_passages(server):
+    srv, cfg = server
+    assert rerank.score_via_server(cfg, "q", ["ab", "cde"]) == [2.0, 3.0]
+    token = rerank.token_path(cfg).read_text().strip()
+    conn = http.client.HTTPConnection("127.0.0.1", srv.server_port, timeout=5)
+    conn.request("POST", "/hello", body=json.dumps({"nonce": "abc"}), headers={"Content-Type": "application/json"})
+    proof = json.loads(conn.getresponse().read())["proof"]
+    import hashlib
+    import hmac
+    assert proof == hmac.new(token.encode(), b"abc", hashlib.sha256).hexdigest()
+
+
+def test_hello_is_refused_from_a_browser_and_for_bad_nonces(server):
+    srv, cfg = server
+
+    def hello(body, headers=None):
+        conn = http.client.HTTPConnection("127.0.0.1", srv.server_port, timeout=5)
+        conn.request("POST", "/hello", body=body, headers={"Content-Type": "application/json", **(headers or {})})
+        r = conn.getresponse()
+        r.read()
+        return r.status
+    assert hello(json.dumps({"nonce": "n"}), {"Origin": "https://evil.example"}) == 403
+    assert hello(json.dumps({"nonce": "n"}), {"Host": "evil.example"}) == 403
+    assert hello(b"not json") == 400 and hello(json.dumps({"nonce": ""})) == 400 and hello(json.dumps({"nonce": "x" * 200})) == 400
+    assert hello(json.dumps({"nonce": "ok"})) == 200
+
+
+def test_a_wrong_token_file_means_the_real_server_is_not_trusted_either(server):
+    srv, cfg = server
+    rerank.token_path(cfg).write_text("0" * 64)  # client and server no longer share the secret
+    assert rerank.score_via_server(cfg, "q", ["ab"]) is None
+
+
+@posix_only
+def test_server_records_pid_and_port_privately_and_doctor_status_reports_them(server):
+    srv, cfg = server
+    rec = json.loads((cfg.state / rerank.SERVER_FILE).read_text())
+    assert rec == {"pid": os.getpid(), "port": srv.server_port}
+    assert oct(os.stat(cfg.state / rerank.SERVER_FILE).st_mode & 0o777) == "0o600"
+    st = rerank.status(cfg)
+    assert st["alive"] and st["port"] == st["config_port"] == srv.server_port
+    cfg.raw["rerank"]["port"] = srv.server_port + 1
+    st = rerank.status(cfg)
+    assert st["port"] != st["config_port"]  # what doctor turns into a MISMATCH line

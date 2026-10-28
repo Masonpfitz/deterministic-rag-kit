@@ -141,6 +141,17 @@ def cmd_doctor(a):
                   "provider = \"openai\" or \"none\" in config.toml.")
     elif prov == "openai":
         print("OPENAI_API_KEY", "set" if os.environ.get("OPENAI_API_KEY") else "NOT set (put it in .env)")
+    from rag import rerank
+    rs = rerank.status(c)
+    if rs["pid"] or rs["token"]:
+        if rs["pid"] and not rs["alive"]:
+            print(f"reranker: recorded server (pid {rs['pid']}) is not running; it will be started on demand")
+        elif rs["pid"] and rs["port"] != rs["config_port"]:
+            ok = False
+            print(f"reranker: MISMATCH. The running server is on port {rs['port']} but config.toml says "
+                  f"{rs['config_port']}, so the hook can't reach it. Restart it or fix [rerank] port.")
+        elif rs["pid"]:
+            print(f"reranker: server running (pid {rs['pid']}, port {rs['port']})")
     print("corpus:", c.corpus, "(exists)" if c.corpus.exists() else "(not created yet)")
     print("all checks passed" if ok else "some checks need attention")
 
