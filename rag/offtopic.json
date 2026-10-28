@@ -1,0 +1,355 @@
+{
+ "version": 1,
+ "cases": [
+  {
+   "id": "o01",
+   "question": "fix this failing test in test_parser.py",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o02",
+   "question": "rename the function getUser to fetchUser across the repo",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o03",
+   "question": "write a commit message for these changes",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o04",
+   "question": "what does this error mean: TypeError: Cannot read properties of undefined (reading 'map')",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o05",
+   "question": "add type hints to this function",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o06",
+   "question": "refactor this class to use dependency injection",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o07",
+   "question": "why is my useEffect running twice",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o08",
+   "question": "convert this loop into a list comprehension",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o09",
+   "question": "write a regex that matches an email address",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o10",
+   "question": "explain what a closure is in javascript",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o11",
+   "question": "how do I undo my last git commit but keep the changes",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o12",
+   "question": "squash the last three commits into one",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o13",
+   "question": "show me the git command to delete a remote branch",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o14",
+   "question": "find all files larger than 100MB in this folder",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o15",
+   "question": "how do I kill the process listening on port 3000",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o16",
+   "question": "write a bash script that backs up a directory to a tarball",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o17",
+   "question": "what does chmod 755 do",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o18",
+   "question": "how do I list running docker containers",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o19",
+   "question": "create a python virtual environment and install requests",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o20",
+   "question": "run the linter and fix whatever it complains about",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o21",
+   "question": "what's the difference between TCP and UDP",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o22",
+   "question": "how does public key cryptography work",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o23",
+   "question": "who wrote the novel Dune",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o24",
+   "question": "what is the capital of Australia",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o25",
+   "question": "how many ounces are in a pound",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o26",
+   "question": "explain the difference between a virus and a bacterium",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o27",
+   "question": "summarize the plot of Hamlet in three sentences",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o28",
+   "question": "what causes the northern lights",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o29",
+   "question": "translate good morning into Spanish",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o30",
+   "question": "what is the boiling point of water at altitude",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o31",
+   "question": "give me a SQL query that returns the top 5 customers by revenue",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o32",
+   "question": "write a haiku about autumn",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o33",
+   "question": "thanks that worked",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o34",
+   "question": "ok go ahead",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o35",
+   "question": "yes please do that",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o36",
+   "question": "can you try again",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o37",
+   "question": "looks good, ship it",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o38",
+   "question": "what do you think",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o39",
+   "question": "hello there",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o40",
+   "question": "continue",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o41",
+   "question": "why did that fail",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o42",
+   "question": "undo that",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o43",
+   "question": "make it shorter",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o44",
+   "question": "now add error handling",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o45",
+   "question": "can you explain that more simply",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o46",
+   "question": "what time zone is Tokyo in",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o47",
+   "question": "is it better to use tabs or spaces",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o48",
+   "question": "write a README for this project",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o49",
+   "question": "how do I center a div",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  },
+  {
+   "id": "o50",
+   "question": "what is a monad",
+   "gold": [],
+   "expect_none": true,
+   "kind": "offtopic"
+  }
+ ]
+}

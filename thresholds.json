@@ -1,0 +1,21 @@
+{
+  "_about": "Every number the verdict uses lives here. status 'cited' means a published source; 'measured' means the author's own benchmark. Edit a value and the verdict follows.",
+  "skip_retrieval_tokens": {
+    "value": 200000,
+    "unit": "estimated tokens in the whole vault",
+    "source": "Anthropic, 'Introducing Contextual Retrieval': a knowledge base smaller than about 200,000 tokens (roughly 500 pages) can go straight into the prompt with no retrieval step.",
+    "status": "cited"
+  },
+  "recommended_tokens": {
+    "value": 5000000,
+    "unit": "estimated tokens in the whole vault",
+    "source": "Mason's benchmark for the video (Claude Sonnet, one fictional company's Obsidian-style vault, 36 questions x 3 runs per arm, 100 to 50,000 notes). From 1,000 notes up, browsing used a median of 33,000 to 51,000 tokens per notes question and injection saved 17,000 to 27,000 of them. The 5M line is a judgment between the 746k-token and 7.6M-token test sizes. Results are not public yet.",
+    "status": "measured"
+  },
+  "bm25_crossover_tokens": {
+    "value": 10000000,
+    "unit": "estimated tokens in the corpus",
+    "source": "arXiv 2607.26497, 'BM25 Wins at Scale': plain keyword (BM25) retrieval overtook a file-browsing agent around 10M corpus tokens, while dense embedding retrieval did no better than the agent at full scale. That study used a small open model; Mason's benchmark, with Claude Sonnet, saw no accuracy crossover up to about 38M tokens.",
+    "status": "cited"
+  }
+}

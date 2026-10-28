@@ -1,0 +1,113 @@
+# Every knob the retrieval pipeline has. Edit, then run:  python3 kit.py eval
+# Nothing here is magic: the eval re-measures your notes with whatever you set.
+
+[corpus]
+# Where the OKF corpus lives (knowledge/ raw/ staging/ schema.yaml). Relative paths
+# are relative to this kit folder. Your original notes are never written to.
+dir = "okf"
+
+[embeddings]
+# "ollama" (free, local, default), "openai" (needs OPENAI_API_KEY in .env), or "none"
+# (keyword search only).
+provider = "ollama"
+# Model for the Ollama provider. bge-m3 is multilingual and handles long sections.
+ollama_model = "bge-m3"
+ollama_url = "http://localhost:11434"
+# Model for the OpenAI provider.
+openai_model = "text-embedding-3-small"
+# Seconds to wait for one embedding call at query time. On a timeout the hook falls
+# back to keyword search for that prompt instead of making you wait.
+query_timeout_s = 3.0
+# Seconds per batch while indexing.
+index_timeout_s = 120.0
+# While indexing, sections are sent to the embedding model in batches of this many (Ollama's
+# /api/embed and OpenAI both accept a list), with this many requests in flight at once.
+# Raise concurrency if your model server has spare capacity (for Ollama, see
+# OLLAMA_NUM_PARALLEL); set it to 1 to send one batch at a time. OpenAI caps a request
+# at 2,048 inputs, so keep batch_size under that.
+batch_size = 32
+concurrency = 2
+# How long Ollama keeps the model in memory between calls. Without this it unloads
+# after a few idle minutes and the next prompt pays for a cold load.
+ollama_keep_alive = "24h"
+
+[chunking]
+# A section longer than this many (estimated) tokens is split on paragraph
+# boundaries. Estimated tokens = characters / 4.
+max_section_tokens = 600
+
+[retrieval]
+# How many candidates each channel contributes before fusion.
+lexical_top_k = 30
+semantic_top_k = 30
+# Reciprocal rank fusion: score = sum over channels of 1 / (k + rank). A bigger k
+# flattens the difference between rank 1 and rank 10.
+rrf_k = 60
+# Exact channel: a title or alias named in the prompt pulls in that note. Off until
+# the eval shows it helps on your notes.
+exact_enabled = false
+# The sentence at the top of an injected block. "verify" tells the agent these are automatic
+# top matches that may be incomplete and that it should search the notes itself when they
+# don't clearly answer the question. "plain" only says they may be irrelevant. In a
+# benchmark, agents that were handed passages tended to stop searching when the passages
+# missed; the verify wording is the fix I ship.
+injection_header = "verify"
+# Hard cap on passages injected, and on their total estimated tokens.
+max_passages = 4
+max_tokens = 4000
+# Claude Code and Codex save hook output over roughly 10,000 characters to a file and
+# show the model only a short preview (measured, see DEV-NOTES.md). So the injected
+# block is also capped by characters: whole passages are dropped, lowest ranked first,
+# until it fits. Raise this only if your harness allows more.
+max_chars = 9000
+
+# Prompts with fewer content words than this inject nothing ("thanks, that worked").
+# Counted after dropping filler words like "the" and "is".
+min_content_terms = 2
+
+# -- Used when the reranker is OFF (the default) --
+# A passage is injected only if it looks relevant by at least one absolute signal, so
+# prompts your notes don't answer (most of what you type into an agent) get nothing:
+# the cosine similarity of the passage to the prompt is at least min_cosine, or at least
+# this share of the prompt's content words appear in the passage. Cosine scales differ
+# between embedding models (0.65 suits bge-m3; OpenAI's model scores lower), so after
+# you change models run `python3 kit.py eval tune` and pick from its table.
+min_cosine = 0.65
+min_term_overlap = 0.67
+
+# -- Pointer tier (off by default until the live test says it helps) --
+# Notes that look somewhat relevant but not enough to inject are listed as a few
+# "possibly relevant notes" lines (path and title only). The model decides whether
+# to open one. A note is listed if its cosine is at least pointer_min_cosine and it
+# was not injected; at most max_pointers lines, and the whole list stays under
+# pointer_max_chars.
+pointers_enabled = false
+pointer_min_cosine = 0.50
+max_pointers = 3
+pointer_max_chars = 600
+
+# -- Used when the reranker is ON --
+rerank_enabled = false
+# The reranker re-scores this many top fused candidates.
+rerank_top_n = 20
+# Keep passages scoring at least this fraction of the best passage's score.
+rel_cutoff = 0.35
+# If even the best passage scores below this, inject nothing.
+abstain_floor = 0.05
+
+# Which note scopes may be retrieved. "me" marks personal notes; remove it to keep
+# them out of every injection.
+scopes = ["shared", "me"]
+# Prompts shorter than this are skipped.
+min_prompt_chars = 12
+
+[rerank]
+model = "BAAI/bge-reranker-v2-m3"
+# Local port for the small server that keeps the reranker loaded between prompts.
+port = 8777
+
+[hook]
+# The hook starts a background reindex when the last one is older than this.
+reindex_every_min = 5
+# Whole-hook time budget in seconds; past it the hook injects nothing.
+budget_s = 6.0

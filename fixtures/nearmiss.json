@@ -1,0 +1,236 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "n01",
+      "question": "How do I decide whether a small clinic website needs a staging site or only daily backups?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n02",
+      "question": "What is a sensible way to version a staging API for a mobile app?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n03",
+      "question": "How do I keep a sourdough starter alive while I am away for two weeks?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n04",
+      "question": "How can I get a shop-front sign permit approved faster?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n05",
+      "question": "What is the best way to push a supplier's lead time down without annoying them?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n06",
+      "question": "How often should I actually test restoring from a backup?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n07",
+      "question": "What are the trade-offs between net 14 and net 30 invoice terms for a small studio?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n08",
+      "question": "What should the first issue of a studio newsletter cover?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n09",
+      "question": "Draft a short email asking a plumber to confirm a quote for replacing a kitchen shutoff valve.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n10",
+      "question": "Write a thank-you note to a supplier whose print proof arrived two days early.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n11",
+      "question": "Draft a LinkedIn post announcing a monthly newsletter from a small design studio.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n12",
+      "question": "Write a one-paragraph project brief for a tea carton packaging redesign.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n13",
+      "question": "Draft a polite overdue reminder for invoice INV-1234.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n14",
+      "question": "Write alt text for a photo of a blade sign above a bakery window.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n15",
+      "question": "Draft meeting notes for a kickoff call about moving a clinic website to a new hosting plan.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n16",
+      "question": "What port does the Kestrel admin dashboard listen on, is it 2087?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n17",
+      "question": "What is invoice INV-0420 for?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n18",
+      "question": "Which supplier has the code SUP-4410?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n19",
+      "question": "What is ticket KST-1204 about?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n20",
+      "question": "When is the review date for permit BP-0417?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n21",
+      "question": "Which hosting plan did we pick for the Bramble Cycles shop site?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n22",
+      "question": "What hydration percentage do I use for the sourdough?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n23",
+      "question": "Which email tool did I pick for the newsletter?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n24",
+      "question": "Which model is the blue backup drive?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n25",
+      "question": "What does the Marlow Tea logo contract say about usage rights?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n26",
+      "question": "Write a Python script that pages through /v2/orders on the Kestrel API and saves each page to disk.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n27",
+      "question": "How do I set up a GitHub Action that deploys the Juniper site to Netlify on every push?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n28",
+      "question": "Write a bash script that keeps the last seven Time Machine style snapshots of the Harbor folder.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n29",
+      "question": "Write a SQL query that sums open invoices by client for the Tidewater account.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n30",
+      "question": "Write a CSS rule that keeps a blade sign preview card at a 3:1 aspect ratio.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n31",
+      "question": "How do I add a bearer token header to a fetch call against the Kestrel staging API?",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n32",
+      "question": "Write a regex that matches invoice numbers shaped like INV-0420.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    },
+    {
+      "id": "n33",
+      "question": "Explain how to restore a Time Machine backup onto a new laptop.",
+      "gold": [],
+      "expect_none": true,
+      "kind": "nearmiss"
+    }
+  ]
+}
